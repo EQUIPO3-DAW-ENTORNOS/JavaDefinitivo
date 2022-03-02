@@ -1,4 +1,5 @@
 
+
 public class Liga {
 	
 	private String nombre;
@@ -7,7 +8,16 @@ public class Liga {
 	private Arbitro[] arbitros;
 	private Clasificacion clasificacion;
 	
-	
+public Liga(String nombre,Equipo[]misEquipos,Arbitro[]arbitros) {
+		
+		this.nombre=nombre;
+		this.equipos=equipos;
+		this.arbitros=arbitros;
+		
+		//Generador de Calendario
+		calendario=new Calendario(this.equipos,this.arbitros);
+		
+	}
 	
 	public String getNombre() {
 		return nombre;

@@ -3,8 +3,8 @@ public class Equipo {
 	private String nombre;
 	private String club;
 	private Entrenador entrenador;
-	private String equipacionCasa;
-	private String equipacionFuera;
+	private String equipacion;
+	
 	private Jugador[] jugadores;
 	
 	
@@ -27,18 +27,8 @@ public class Equipo {
 	public void setEntrenador(Entrenador entrenador) {
 		this.entrenador = entrenador;
 	}
-	public String getEquipacionCasa() {
-		return equipacionCasa;
-	}
-	public void setEquipacionCasa(String equipacionCasa) {
-		this.equipacionCasa = equipacionCasa;
-	}
-	public String getEquipacionFuera() {
-		return equipacionFuera;
-	}
-	public void setEquipacionFuera(String equipacionFuera) {
-		this.equipacionFuera = equipacionFuera;
-	}
+	
+
 	public Jugador[] getJugadores() {
 		return jugadores;
 	}
@@ -62,6 +52,12 @@ public class Equipo {
 				"Plantilla: "+"\n"+
 				toStringJugadores(this.jugadores);
 		
+	}
+	public String getEquipacion() {
+		return equipacion;
+	}
+	public void setEquipacion(String equipacion) {
+		this.equipacion = equipacion;
 	}
 
 
