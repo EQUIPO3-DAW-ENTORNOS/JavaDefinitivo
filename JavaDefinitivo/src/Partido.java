@@ -1,41 +1,35 @@
 
 
 public class Partido {
-	  private Equipo equipoLocal;
-	  private Equipo equipoVisitante;
-	  private int golesLocal;
-	  private int golesVisitante;
-	  private Arbitro arbitro;
-	  
-	  
-	  public Partido(Partido partidos) {
-		  
-		  
-	  }
-	  
-	public Equipo getEquipoLocal() {
-		return equipoLocal;
+	private Equipo local;
+	private Equipo visitante;
+	private int gLocal;
+	private int gVisitante;
+	private Arbitro arbitro;
+	
+	public Equipo getLocal() {
+		return local;
 	}
-	public void setEquipoLocal(Equipo equipoLocal) {
-		this.equipoLocal = equipoLocal;
+	public void setLocal(Equipo local) {
+		this.local = local;
 	}
-	public Equipo getEquipoVisitante() {
-		return equipoVisitante;
+	public Equipo getVisitante() {
+		return visitante;
 	}
-	public void setEquipoVisitante(Equipo equipoVisitante) {
-		this.equipoVisitante = equipoVisitante;
+	public void setVisitante(Equipo visitante) {
+		this.visitante = visitante;
 	}
-	public int getGolesLocal() {
-		return golesLocal;
+	public int getgLocal() {
+		return gLocal;
 	}
-	public void setGolesLocal(int golesLocal) {
-		this.golesLocal = golesLocal;
+	public void setgLocal(int gLocal) {
+		this.gLocal = gLocal;
 	}
-	public int getGolesVisitante() {
-		return golesVisitante;
+	public int getgVisitante() {
+		return gVisitante;
 	}
-	public void setGolesVisitante(int golesVisitante) {
-		this.golesVisitante = golesVisitante;
+	public void setgVisitante(int gVisitante) {
+		this.gVisitante = gVisitante;
 	}
 	public Arbitro getArbitro() {
 		return arbitro;
@@ -43,5 +37,12 @@ public class Partido {
 	public void setArbitro(Arbitro arbitro) {
 		this.arbitro = arbitro;
 	}
-	  
+	
+	@Override
+	public String toString() {
+		return this.local.getNombre()+" "+this.gLocal+":"
+				+this.gVisitante+" "+this.visitante.getNombre()
+				+", Arbitro: "+this.arbitro.getApellidos()+"\n";
+	}
+
 }

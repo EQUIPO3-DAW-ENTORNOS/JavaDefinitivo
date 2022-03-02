@@ -1,117 +1,104 @@
 
 
-public class Clasificacion {
-	private EquipoClasificacion [] tabla;
-
-	public Clasificacion (Equipo[] equipos, Calendario calendario) {
-		//Crear la tabla
-		int numeroEquipos = equipos.length;
-
-		this.tabla = new EquipoClasificacion[numeroEquipos];
-		for(int i=0;i<numeroEquipos;i++) {
-			this.tabla[i] = new EquipoClasificacion();
-			this.tabla[i].setEquipo(equipos[i]);
-		}
-		//Rellenarla
-		Jornada[] jornadas = calendario.getJornadas();
-		for (Jornada jor : jornadas) {
-			if (jor.isTerminada()) {
-				Partido[] partidos = jor.getPartidos(); 
-				for (Partido par: partidos) {
-					Equipo local = par.getLocal();
-					Equipo visitante = par.getVisitante();
-					//Buscar a los equipos en la tabla de clasificacion
-					int contador=0;
-					EquipoClasificacion localClas = this.tabla[contador];
-					//Busco al local
-					while (localClas.getEquipo()!=local) {
-						contador++;
-						localClas=this.tabla[contador];
-					}
-					contador=0;
-					EquipoClasificacion visitClas = this.tabla[contador];
-					//Busco al visitante
-					while (visitClas.getEquipo()!=visitante) {
-						contador++;
-						visitClas=this.tabla[contador];
-					}
-					//Asignamos los valores
-					int golesLocales=par.getgLocal();
-					int golesVisitantes=par.getgVisitante();
-
-					localClas.addGolesFavor(golesLocales);
-					localClas.addGolesContra(golesVisitantes);
-
-					visitClas.addGolesFavor(golesVisitantes);
-					visitClas.addGolesContra(golesLocales);
-
-					if (golesLocales>golesVisitantes) {//Gana local
-						localClas.addVictoria();
-						visitClas.addDerrota();
-					}else if (golesLocales<golesVisitantes) {//Gana visitante
-						localClas.addDerrota();
-						visitClas.addVictoria();
-					}else {//Empate
-						localClas.addEmpate();
-						visitClas.addEmpate();
-					}
-				}
-			}
-		}
-
-		ordenar();
-
-
-
+public class EquipoClasificacion {
+	
+	private Equipo equipo;
+	private int jugados=0;
+	private int ganados=0;
+	private int perdidos=0;
+	private int empatados=0;
+	private int gFavor=0;
+	private int gContra=0;
+	private int dGoles=0;
+	private int puntos=0;
+	
+	public Equipo getEquipo() {
+		return equipo;
 	}
-	private void ordenar() {
-		//Ordenación por bubbleSort
-
-		int n = this.tabla.length;  
-		EquipoClasificacion temp = null;  
-		for(int i=0; i < n; i++){  
-			for(int j=1; j < (n-i); j++){  
-				if(vaDespues(tabla[j-1],tabla[j])){  
-					//swap elements  
-					temp = tabla[j-1];  
-					tabla[j-1] =tabla[j];  
-					tabla[j] = temp;  
-				}  
-
-			}  
-		}
+	public void setEquipo(Equipo equipo) {
+		this.equipo = equipo;
 	}
-	private boolean vaDespues(EquipoClasificacion equipo1, EquipoClasificacion equipo2) {
-		
-		//Primer Criterio Puntos
-		if (equipo1.getPuntos()<equipo2.getPuntos()) {
-			return true;
-		}else if (equipo1.getPuntos()>equipo2.getPuntos()) {
-			return false;
-		}else{ //Segundo Criterio. A igualdad de puntos, diferencia goles
-			if (equipo1.getdGoles()<equipo2.getdGoles()) {
-				return true;
-			}else if (equipo1.getdGoles()>equipo2.getdGoles()) {
-				return false;
-			}else {//Tercer Critero. Goles a favor
-				if (equipo1.getgFavor()<equipo2.getgFavor()) {
-					return true;
-				}else if (equipo1.getgFavor()>equipo2.getgFavor()) {
-					return false;
-				}
-			}
-			//Ultimo criterio. El primero baja y punto.
-			return true;
-			
-		}
-
+	public int getJugados() {
+		return jugados;
 	}
+	public void setJugados(int jugados) {
+		this.jugados = jugados;
+	}
+	public int getGanados() {
+		return ganados;
+	}
+	public void setGanados(int ganados) {
+		this.ganados = ganados;
+	}
+	public int getPerdidos() {
+		return perdidos;
+	}
+	public void setPerdidos(int perdidos) {
+		this.perdidos = perdidos;
+	}
+	public int getgFavor() {
+		return gFavor;
+	}
+	public void setgFavor(int gFavor) {
+		this.gFavor = gFavor;
+	}
+	public int getgContra() {
+		return gContra;
+	}
+	public void setgContra(int gContra) {
+		this.gContra = gContra;
+	}
+	public int getdGoles() {
+		return dGoles;
+	}
+	public void setdGoles(int dGoles) {
+		this.dGoles = dGoles;
+	}
+	public int getPuntos() {
+		return puntos;
+	}
+	public void setPuntos(int puntos) {
+		this.puntos = puntos;
+	}
+	
+	public void addGolesFavor(int valor) {
+		this.gFavor+=valor;
+		this.dGoles+=valor;
+	}
+	
+	public void addGolesContra(int valor) {
+		this.gContra+=valor;
+		this.dGoles-=valor;
+	}
+	
+	public void addVictoria() {
+		this.jugados++;
+		this.ganados++;
+		this.puntos+=3;
+	}
+	
+	public void addEmpate() {
+		this.jugados++;
+		this.empatados++;
+		this.puntos++;
+	}
+	
+	public void addDerrota() {
+		this.jugados++;
+		this.perdidos++;
+	}
+	
 	@Override
 	public String toString() {
-		String cadena = "Pos\tEquipo\t\t\t\t\t\t"+"J\t"+"G\t"+"P\t"+"E\t"+"GF\t"+"GC\t"+"DG\t"+"Pts\n";
-		for (int i=0; i<tabla.length; i++) {
-			cadena+=(i+1)+"\t"+tabla[i];
+		String cadena= equipo.getNombre();
+		int longitud = cadena.length();
+		int tabuladores = 6;
+		int tabEquipo = longitud/8;
+		for (int i=0; i<tabuladores-tabEquipo;i++) {
+			cadena+="\t";
 		}
+		cadena+=jugados+"\t"+ganados+"\t"+perdidos+"\t"+
+				empatados+"\t"+gFavor+"\t"+gContra+"\t"+dGoles+"\t"+puntos+"\n";
 		return cadena;
 	}
 
